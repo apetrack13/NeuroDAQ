@@ -39,6 +39,6 @@ class MCP3008(object):
         ch4_result = resp[8] << 4
         ch4_result |= resp[9] >> 4
         
-        Results = (ch1_result, ch2_result, ch3_result, ch4_result)
+        Results = [ch1_result, ch2_result, ch3_result, ch4_result]
 
         return Results

@@ -4,7 +4,7 @@ import Adafruit_MCP3008
 import RPi.GPIO as gpio
 
 
-def beginAcq(frequency, current, numChannels, impedance, duration, fileName):
+def beginAcq(numChannels, duration, fileName):
     SPI_PORT = 0
     SPI_DEVICE = 0
     mcp = Adafruit_MCP3008.MCP3008(spi=SPI.SpiDev(SPI_PORT, SPI_DEVICE))
@@ -16,8 +16,8 @@ def beginAcq(frequency, current, numChannels, impedance, duration, fileName):
 
     t1 = time.time() + duration
     # print(t1)
-    with open(fileName, 'a+') as f:
-        f.write('\n')
+    with open(fileName, 'w+') as f:
+        f.write('')
 
     print('Reading ADS8668 values, press Ctrl-C to quit...')
 
@@ -35,7 +35,7 @@ def beginAcq(frequency, current, numChannels, impedance, duration, fileName):
             values0[1] = ((float(values0[1]) - 2046) / 197)   # ADC 2
 
             # Append samples to array
-            values.extend(values0)
+            values.extend(values0[0:2])
             values.extend(tempTime)
 
         elif (numChannels == 2):
